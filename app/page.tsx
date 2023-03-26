@@ -3,7 +3,8 @@ import TodoList from './(users)/todos/TodosList';
 
 function Home() {
   return (
-    <div className="flex flex-col space-y-10">
+    <div id="todoContainer" className="flex frog flex-col space-y-10">
+
      <Suspense fallback={<p className="text-red-500">Loading the Todos...</p>}>
     
     <div className="flex space-x-2">
@@ -16,7 +17,7 @@ function Home() {
     <div className="flex space-x-2">
       
     {/* @ts-ignore */}
-    <TodoList/>
+    <TodoList delayed/>
     </div>
     </Suspense>
     </div>

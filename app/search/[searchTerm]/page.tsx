@@ -12,9 +12,8 @@ const ts = Date.now();
 const hash = Md5.hashStr(`${ts}${process.env.PVTKEY}${process.env.NEXT_PUBLIC_PUBKEY}`); 
 
 const search = async (searchTerm: string) => {
-  const res = await fetch(`https://gateway.marvel.com/v1/public/characters?ts=${ts}&name=${searchTerm}&orderBy=name&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`);
+  const res = await fetch(`https://gateway.marvel.com/v1/public/characters?ts=${ts}&nameStartsWith=${searchTerm}&orderBy=name&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`);
   const data = await res.json();
-  console.log("1", data.data.results);
   return data?.data;
 };
 
