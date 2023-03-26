@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react'
+import TodoList from './(users)/todos/TodosList';
 
 function Home() {
   return (
@@ -11,8 +12,9 @@ function Home() {
     </div>
     </Suspense>
 
-<Suspense fallback={<p className="text-blue-500">Loading the Shopping Trollyu...</p>}>
+<Suspense fallback={<p className="text-blue-500">Loading the Shopping Trolly...</p>}>
     <div className="flex space-x-2">
+      
     {/* @ts-ignore */}
     <TodoList/>
     </div>

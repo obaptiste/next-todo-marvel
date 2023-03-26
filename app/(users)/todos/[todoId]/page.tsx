@@ -1,6 +1,7 @@
 import React from 'react';
 import { Todo } from '../../../../typings';
-import { notFound } from "next/navigation"
+import { notFound } from "next/navigation";
+import TodoList from "../../../(users)/todos/TodosList";
 //import {Todo} from "../../../typings";
 
 type PageProps = {
