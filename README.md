@@ -12,7 +12,7 @@ To run this project locally, follow these steps:
 Clone the repository:
 
 
-git clone https://github.com/your-username/next-todo-marvel.git
+git clone https://github.com/obaptiste/next-todo-marvel.git
 
 
 Install dependencies:
@@ -25,7 +25,7 @@ npm install
 Create a .env.local file in the root directory and add your Marvel API key:
 
 
-MARVEL_API_KEY=your-api-key-here
+PUBKEY=your-api-key-here
 
 
 Run the development server:
