@@ -18,7 +18,9 @@ export default function Header() {
         <p className="font-bold text-white my-3">I am a header</p>
         <Link href="/" className="text-blue-500" style={linkStyle}>Home</Link>
         <Link href="/search" className="text-blue-500" style={linkStyle}>Search</Link>
-        <Link href="/todos" className="text-blue-500" style={linkStyle}>Todos</Link>
+        <Link href="/todos" className="text-green-700" style={linkStyle}>Todos</Link>
+        <Link href="/heroes" className="text-red-700" style={linkStyle}>Heroes</Link>
+
     </header> 
   )
 }

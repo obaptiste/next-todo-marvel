@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import TodoList from './(users)/todos/TodosList';
+import HeroesList from './(users)/heroes/HeroesList';
 
 function Home() {
   return (
@@ -20,6 +21,13 @@ function Home() {
     <TodoList delayed/>
     </div>
     </Suspense>
+
+    {/* <Suspense fallback={<p className="text-green-700">Loading the catalog of heroes...</p>}>
+      <div className="flex space-x-2">
+            {/* @ts-ignore 
+            <HeroesList/>
+      </div>
+    </Suspense> */}*/
     </div>
   )
 }

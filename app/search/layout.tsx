@@ -10,12 +10,12 @@ export default function RootLayout({
             <div>
                 <h1>Search</h1>
             </div>
-            <div className='flex-1 pl-5'>
+            <div className='flex'>
                 {/* @ts-ignore */}
                 <Search />
                 <div>{children}</div>
             </div>
-            <div className="flex-1">{children}</div>
+            {/* <div className="flex-1">{children}</div> */}
         </main>
     );
 }

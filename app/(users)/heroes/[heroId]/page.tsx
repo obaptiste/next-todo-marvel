@@ -1,53 +1,72 @@
 import React from 'react';
-import { Todo } from '../../../../typings';
 import { notFound } from "next/navigation";
 import Image from 'next/image';
-import TodoList from "../../../(users)/todos/TodosList";
-import {Hero} from "../../../../typings";
+import HeroList from "../HeroesList";
+import {Hero} from "../../../../typings/typings";
+import {Md5} from 'ts-md5'
+// import Comics from './comics'
+
 
 type PageProps = {
     params: {
-        heroId?: string;
+        heroId: string;
     };
 };
 
-const callHeroes = async () => {
-    const res = await fetch(`https://gateway.marvel.com/v1/public/characters?ts=${ts}&nameStartsWith=${searchTerm}&orderBy=name&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`);
+const ts = Date.now();
+const hash = Md5.hashStr(`${ts}${process.env.PVTKEY}${process.env.NEXT_PUBLIC_PUBKEY}`); 
+
+
+const getHero = async (heroId:string) => {
+    const res = await fetch(`https://gateway.marvel.com/v1/public/characters/${heroId}?ts=${ts}&orderBy=name&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`);
+    
+    if (!res.ok) {
+        throw new Error('Failed to fetch data');
+    }
+
     const data = await res.json();
-    return data?.data;
+    const hero: Hero = data?.data;
+    return hero
 };
 
-async function HeroPage() {
-    const heroes = await callHeroes();
+async function HeroPage({params: {heroId}}: PageProps) {
+    const hero = await getHero(heroId);
 
-    if(!heroes.empty) return notFound();
-    console.log(heroes)
+    if(!hero) return notFound();
+    console.log(hero)
+    const {name, description, thumbnail, comics} = hero;
     
   return (
-    <div className="p-10 bg-yellow-200 border-2 m-2 shadow-lg">
-        <p>#{heroes}: {heroes.map((hero:Hero) => {
-            <><h3>{hero.name}</h3><Image alt={hero.name} src={hero.image}>{hero.image}</Image></>
-        })}</p>
-        <p>Completed: {heroes.completed ? "Yes": "No"}</p>
-      <p className="border-t border-black mt-5 text-right">
-        By User: {heroes.userId}
+    <div className="p-10 bg-green-200 border-2 m-2 shadow-lg">
+        <p>
+            <h3>{name}</h3>
+            <Image alt={`${name}`} src={`${thumbnail.path}.jpg`} height="300" />
+       </p>
+        <p>{description} </p>
+        <h4>Character's comics</h4>
+        <p>{Array.isArray(comics) && comics.map((comic) => {
+            const [{items}] = comic;
+            return(
+            <p>{comic.name}</p>
+            )
+        }) }
         </p>
     </div>
-
   );
 }
 
 export default HeroPage
 
 export async function generateStaticParams() {
-    const res = await fetch("https://jsonplaceholder.typicode.com/todos/");
-    const todos: Todo[] = await res.json();
+    const res = await fetch(`https://gateway.marvel.com/v1/public/characters?ts=${ts}&orderBy=name&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`);
+    const data = await res.json();
+    const heroes:Hero[] = data?.data;
 
     // this is to avoid being rate limited by the API
 
-    const trimmedTodos = todos.slice(0, 10);
+    const trimmedHeroes = heroes.slice(0, 10);
 
-    return trimmedTodos.map((todo) => ({
-        todoId: todo.id.toString(),
-    }));;
+    return trimmedHeroes.map((hero) => ({
+        heroId: hero.id?.toString(),            
+    }));
 }

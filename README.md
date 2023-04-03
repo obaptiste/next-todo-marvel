@@ -1,27 +1,71 @@
-# Next.js + Tailwind CSS Example
+Next.js Todo and Marvel Characters
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.2)](https://tailwindcss.com/blog/tailwindcss-v3-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+This is a simple Next.js app that fetches todo items from a website and Marvel characters from the Marvel API and renders them on the page.
 
-## Deploy your own
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+Getting Started
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+To run this project locally, follow these steps:
 
-## How to use
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-```
+Clone the repository:
 
-```bash
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
 
-```bash
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
-```
+git clone https://github.com/your-username/next-todo-marvel.git
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+
+Install dependencies:
+
+
+cd next-todo-marvel
+npm install
+
+
+Create a .env.local file in the root directory and add your Marvel API key:
+
+
+MARVEL_API_KEY=your-api-key-here
+
+
+Run the development server:
+
+
+npm run dev
+
+
+Open http://localhost:3000 in your browser to see the app.
+
+
+
+
+Features
+
+This app fetches todo items from https://jsonplaceholder.typicode.com/todos and Marvel characters from the Marvel Developer API (https://developer.marvel.com/docs#getting_started), and displays them on separate pages.
+
+
+Todo Page
+
+The Todo page lists all the todo items fetched from the website. The todos are displayed in a table with columns for the todo ID, title, and completion status.
+
+
+Marvel Heroes Page
+
+The Marvel Heroes page lists all the Marvel characters fetched from the Marvel API. The heroes are displayed in cards with their name, picture and details.
+
+
+Built With
+
+
+Next.js
+
+React
+
+Marvel Developer API
+
+Axios
+
+
+License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

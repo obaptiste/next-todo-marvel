@@ -1,5 +1,5 @@
 import React from 'react';
-import { Todo } from '../../../../typings';
+import { Todo } from '../../../../typings/typings';
 import { notFound } from "next/navigation";
 import TodoList from "../../../(users)/todos/TodosList";
 //import {Todo} from "../../../typings";
@@ -46,5 +46,5 @@ export async function generateStaticParams() {
 
     return trimmedTodos.map((todo) => ({
         todoId: todo.id.toString(),
-    }));;
+    }));
 }
