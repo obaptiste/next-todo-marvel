@@ -1,40 +1,38 @@
-import React, { Fragment } from "react";
+import React from "react";
 import Link from "next/link";
-import {
-  Hero,
-  HeroesResult,
-  ComicsResult,
-  HeroResult,
-  Heroes,
-  ComicResult,
-} from "../../../typings/typings";
-import { getHeroes, getAllComics } from "../../utilities/heroService";
+import { Hero, Heroes } from "../../../typings/typings";
+import TodosList from "../todos/TodosList";
+import { getHeroes } from "../../utilities/heroService";
+import Image from 'next/image';
 
 async function HeroesList() {
-  const heroesData = await getHeroes();
-  const comicsData = await getAllComics();
-
-  const [heroes, comics] = await Promise.all([heroesData, comicsData]);
-
-
-
+  const heroes = await getHeroes();
+  console.log("heroes",heroes);
   return (
     <>
-      {heroes &&
-        heroes.map(async (hero, index) => (
-          <div key={index} className="heroCardInner">
-            <Link href={`/heroes/${(await hero).id}`}>
-              <p>{(await hero).name}</p>
-              <p>{(await hero).description}</p>
-            </Link>
-            <>
-              <h3>Comics featured in..</h3>
-              
-            </>
-          </div>
-        ))}
+      {heroes && heroes.map((hero: Hero) => (
+        <p key={hero.id} className="heroCard">
+          <Link href={`/heroes/${hero.id}`}>Hero: {hero.name}</Link>
+          <Image
+            src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
+            alt={`${hero.name}`}
+            width="200" 
+            height="250"
+          />
+          <span>{hero.description}</span>
+        </p>
+      ))}
     </>
   );
 }
+
+// function Todos() {
+//   return (
+//     <div>
+//       {/* @ts-ignore */}
+//       <TodosList />
+//     </div>
+//   );
+// }
 
 export default HeroesList;

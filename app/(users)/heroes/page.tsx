@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import HeroesList from './HeroesList';
 
-function page() {
-  return (
-    <div>page</div>
-  )
+
+function Heroes() {
+  return <div>
+    {/* @ts-ignore */}
+    <HeroesList />
+  </div>;    
 }
 
-export default page
+export default Heroes;

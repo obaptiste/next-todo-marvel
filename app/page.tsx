@@ -22,12 +22,12 @@ function Home() {
     </div>
     </Suspense>
 
-    {/* <Suspense fallback={<p className="text-green-700">Loading the catalog of heroes...</p>}>
+   <Suspense fallback={<p className="text-green-700">Loading the catalog of heroes...</p>}>
       <div className="flex space-x-2">
-            {/* @ts-ignore 
+            {/* @ts-ignore */}
             <HeroesList/>
       </div>
-    </Suspense> */}*/
+    </Suspense>
     </div>
   )
 }

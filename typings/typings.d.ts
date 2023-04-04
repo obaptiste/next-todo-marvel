@@ -47,7 +47,7 @@ export type Hero = {
 
 export type HeroResult = Promise<Hero>;
 
-export type Heroes = Array<Hero | HeroResult>;
+export type Heroes = Array<Hero>;
 
 export type HeroesResult = HeroResult[];
 
