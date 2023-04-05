@@ -30,14 +30,22 @@ async function HeroPage({ params: { heroId } }: PageProps) {
   if (!hero.id) return notFound();
   console.log(hero);
 
-  const { name, description, thumbnail } = hero;
+  const { name, description, thumbnail, comics } = hero;
 
   return (
     <div className="heroPage p-10 bg-green-200 border-2 m-2 shadow-lg">
       <h3>{name}</h3>
       <Image alt={`${name}`} src={`${thumbnail.path}.jpg`} height="250" width="200"/>
       <p>{description} </p>
-      <h4>Character's comics</h4>
+      {Array.isArray(comics.items) &&
+                    comics.items.map((comic) => {                    
+                        return (
+                          <>
+                            <h3 className="font-bold my-1">Comics Featured in</h3>
+                            <p key={comic.name}>{comic.name}</p>
+                          </>
+                        );
+                      })}
     </div>
   );
 }
@@ -46,11 +54,11 @@ export default HeroPage;
 
 export async function generateStaticParams() {
 
-  const heroes: Hero[] = await getHeroes();
+  const heroes: Hero[] = await getHeroes(0);
 
   // this is to avoid being rate limited by the API
 
-  const trimmedHeroes = heroes.slice(0, 10);
+  const trimmedHeroes = heroes.slice(0, 20);
 
 
     return trimmedHeroes.map((hero) => ({

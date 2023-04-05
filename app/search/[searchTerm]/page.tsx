@@ -79,6 +79,7 @@ async function SearchResults({ params: { searchTerm } }: PageProps) {
             }) => (
               <li key={result.id} className="list-decimal">
                 <>
+                <Link href={`/heroes/${result.id}`}>
                   <p className="font-bold">{result.name}</p>
                   <span>
                     <Image
@@ -89,19 +90,18 @@ async function SearchResults({ params: { searchTerm } }: PageProps) {
                     />
                   </span>
                   <p>{result.description}</p>
+                  </Link>
 
-                  {Array.isArray(result.comics) &&
-                    result.comics.map((comic) => {
-                      const [{ items }] = comic;
-                      items.map((name: string, index: number) => {
+                  {Array.isArray(result.comics.items) &&
+                    result.comics.items.map((comic) => {                    
                         return (
                           <>
                             <h3>Comics Featured in</h3>
-                            <p key={index}>{name}</p>
+                            <p key={comic.name}>{comic.name}</p>
                           </>
                         );
-                      });
-                    })}
+                      })}
+                    
                 </>
               </li>
             )

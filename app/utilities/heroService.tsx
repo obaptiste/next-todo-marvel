@@ -8,6 +8,7 @@ import { Hero, HeroResult, HeroesResult, ComicsResult, Heroes } from "../../typi
 type PageProps = {
   params: {
     heroId: string;
+    offset?:number;
  
   getHeroes:() => Promise<Heroes>;
   getHero: () => Promise<HeroResult>;
@@ -21,9 +22,9 @@ export const hash = Md5.hashStr(
 
 // export function HeroService(params?:PageProps) {
 
-    export const getHeroes = async () => {
+    export const getHeroes = async (offset?:number) => {
     const res = await fetch(
-      `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`
+      `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}&offset=${offset}`
     );
 
     if (!res.ok) {
@@ -37,7 +38,7 @@ export const hash = Md5.hashStr(
 
   export const getHero = async (heroId: string) => {
     const res = await fetch(
-      `https://gateway.marvel.com/v1/public/characters/${heroId}?ts=${ts}&orderBy=name&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`
+      `https://gateway.marvel.com/v1/public/characters/${heroId}?ts=${ts}&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`
     );
     if (!res.ok) {
       throw new Error("Failed to fetch a single hero");

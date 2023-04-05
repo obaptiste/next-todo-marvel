@@ -6,8 +6,10 @@ import { getHeroes } from "../../utilities/heroService";
 import Image from 'next/image';
 
 async function HeroesList() {
-  const heroes = await getHeroes();
-  console.log("heroes",heroes);
+  let randomOffset = Math.floor(Math.random() * 15 + 20) 
+  randomOffset += 20;
+  const heroes = await getHeroes(randomOffset);
+  console.log("heroes",randomOffset);
   return (
     <div className="heroContainer">
       {heroes && heroes.map((hero: Hero) => (
