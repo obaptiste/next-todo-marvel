@@ -11,7 +11,6 @@ type PageProps = {
   params: {
     heroId: string;
   };
-  comics: any[];
 };
 
 // const CharactersComics = ({ comics }: PageProps) => {
