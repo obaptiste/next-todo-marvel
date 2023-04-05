@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <header className="p-5 bg-teal-500">
-        <p className="font-bold text-white my-3">I am a header</p>
+        <p className="font-bold text-white my-3">A Marvel Character Index</p>
         <Link href="/" className="text-blue-500" style={linkStyle}>Home</Link>
         <Link href="/search" className="text-blue-500" style={linkStyle}>Search</Link>
         <Link href="/todos" className="text-green-700" style={linkStyle}>Todos</Link>
