@@ -35,16 +35,17 @@ export const hash = Md5.hashStr(
     return heroes;
   };
 
-  export const getHero = async (heroId: string):Promise<HeroResult> => {
+  export const getHero = async (heroId: string) => {
     const res = await fetch(
       `https://gateway.marvel.com/v1/public/characters/${heroId}?ts=${ts}&orderBy=name&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`
     );
     if (!res.ok) {
-      throw new Error("Failed to fetch a single hero", onmessage = notFound());
+      throw new Error("Failed to fetch a single hero");
     }
 
     const data = await res.json();
-    const hero: Hero = data?.data;
+    const hero: Hero = data?.data?.results[0];
+    console.log("hero",hero)
     return hero;
   };
 

@@ -6,12 +6,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <main className="flex">
+        <main className="flex-1">
             <div>
-                {/* @ts-ignore */}
-                <HeroesList />
+               {children}
             </div>
-            <div className="flex-1">{children}</div>
+            <div className="flex-1"> {/* @ts-ignore */}
+                <HeroesList /></div>
         </main>
     );
 }

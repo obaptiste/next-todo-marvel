@@ -9,20 +9,21 @@ async function HeroesList() {
   const heroes = await getHeroes();
   console.log("heroes",heroes);
   return (
-    <>
+    <div className="heroContainer">
       {heroes && heroes.map((hero: Hero) => (
         <p key={hero.id} className="heroCard">
-          <Link href={`/heroes/${hero.id}`}>Hero: {hero.name}</Link>
+          <Link href={`/heroes/${hero.id}`}><span className="text-center text-green-800 font-bold">{hero.name}</span>
           <Image
+          className="backdrop-grayscale-0"
             src={`${hero.thumbnail.path}.${hero.thumbnail.extension}`}
             alt={`${hero.name}`}
-            width="200" 
+            width="250" 
             height="250"
-          />
+          /></Link>
           <span>{hero.description}</span>
         </p>
       ))}
-    </>
+    </div>
   );
 }
 
