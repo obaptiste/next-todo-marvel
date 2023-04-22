@@ -3,8 +3,8 @@ import Image from 'next/image'
 import { getRandomHero } from '../app/utilities/heroService'
 
 async function ImageComponent() {
-    const {thumbnail, name} = await getRandomHero();
-  
+    
+    const {name, thumbnail} = await getRandomHero();       
    
   return (
     <div>

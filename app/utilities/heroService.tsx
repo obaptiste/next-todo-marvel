@@ -76,9 +76,13 @@ let randomOffset = Math.floor(Math.random() * 250)
 
   const data = await res.json();
   const heroes = data?.data?.results;
-  const heroIndex = heroes.length;
+  const heroesWithImages = heroes.filter((hero: Hero) => {
+    return !hero.thumbnail.path.includes("image_not_available");
+  });
+    
+  const heroIndex = heroesWithImages.length;
   const randomHeroIndex = Math.floor(Math.random() * heroIndex);
-  return heroes[randomHeroIndex];
+  return heroesWithImages[randomHeroIndex];
 }
 
   export const getComics = async (heroId: string): Promise<ComicsResult> => {

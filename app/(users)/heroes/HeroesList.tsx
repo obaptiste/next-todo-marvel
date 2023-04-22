@@ -9,9 +9,14 @@ async function HeroesList() {
   let randomOffset = Math.floor(Math.random() * 250) 
   const heroes = await getHeroes(randomOffset);
   console.log("heroes",randomOffset);
+
+  const heroesFilteredImages = heroes.filter((hero: Hero) => {
+    return !hero.thumbnail.path.includes("image_not_available") 
+  });
+
   return (
     <div className="heroContainer">
-      {heroes && heroes.map((hero: Hero) => (
+      {heroes && heroesFilteredImages.map((hero: Hero) => (
         <p key={hero.id} className="heroCard">
           <Link href={`/heroes/${hero.id}`}><span className="text-center text-green-800 font-bold">{hero.name}</span>
           <Image
