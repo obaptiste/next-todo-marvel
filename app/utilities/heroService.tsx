@@ -9,7 +9,10 @@ type PageProps = {
   params: {
     heroId: string;
     offset?:number;
- 
+    options?:{
+      key:string,
+      value:any
+    } 
   getHeroes:() => Promise<Heroes>;
   getHero: () => Promise<HeroResult>;
 };
@@ -20,26 +23,36 @@ export const hash = Md5.hashStr(
   `${ts}${process.env.PVTKEY}${process.env.NEXT_PUBLIC_PUBKEY}`
 );
 
-// export function HeroService(params?:PageProps) {
+let randomOffset = Math.floor(Math.random() * 250) 
 
-    export const getHeroes = async (offset?:number) => {
-    const res = await fetch(
-      `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}&offset=${offset}`
-    );
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch heroes");
-    }
+    export async function getHeroes(offset?: number, options?:{}) {
+  if (!offset)
+    offset = randomOffset;
 
-    const data = await res.json();
-    const heroes = data?.data?.results;
-    return heroes;
-  };
+
+  const res = await fetch(
+    `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}&offset=${offset}`
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch heroes");
+  }
+
+  const data = await res.json();
+  const heroes = data?.data?.results;
+  return heroes;
+}
 
   export const getHero = async (heroId: string) => {
     const res = await fetch(
-      `https://gateway.marvel.com/v1/public/characters/${heroId}?ts=${ts}&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`
-    );
+      `https://gateway.marvel.com/v1/public/characters/${heroId}?ts=${ts}&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}`,
+      {
+      next: {
+        revalidate:25,
+      },
+    });
+    
     if (!res.ok) {
       throw new Error("Failed to fetch a single hero");
     }
@@ -49,6 +62,24 @@ export const hash = Md5.hashStr(
     console.log("hero",hero)
     return hero;
   };
+
+
+  export async function getRandomHero() {
+  const res = await fetch(
+    `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${process.env.NEXT_PUBLIC_PUBKEY}&hash=${hash}&offset=${randomOffset}`,
+    {next : {revalidate: 20}}
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch heroes");
+  }
+
+  const data = await res.json();
+  const heroes = data?.data?.results;
+  const heroIndex = heroes.length;
+  const randomHeroIndex = Math.floor(Math.random() * heroIndex);
+  return heroes[randomHeroIndex];
+}
 
   export const getComics = async (heroId: string): Promise<ComicsResult> => {
     const res = await fetch(`https://gateway.marvel.com/v1/public/characters/${heroId}/comics`);
@@ -70,4 +101,4 @@ export const hash = Md5.hashStr(
     return items;
   };
 
-export default {getHero, getHeroes, getComics, getAllComics};
+export default {getHero, getHeroes, getRandomHero, getComics, getAllComics};

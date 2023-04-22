@@ -17,3 +17,20 @@
 .heroPage {
     width: 95%;
 }
+
+.comicsContainer div {
+    display: grid;
+    grid-template-columns: 
+    repeat(auto-fit, minmax(250px, 1fr));
+}
+
+header {
+    background-size:cover;
+    background-position-y: -120px;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+header p {
+    color: transparent;
+}

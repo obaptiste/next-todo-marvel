@@ -4,7 +4,7 @@ import Image from "next/image";
 import HeroList from "../HeroesList";
 import { Hero } from "../../../../typings/typings";
 
-import { getHeroes, getHero, ts,hash } from "../../../utilities/heroService";
+import { getHeroes, getHero } from "../../../utilities/heroService";
 import HeroCard from "../../../../component/HeroCard";
 
 type PageProps = {
@@ -13,39 +13,39 @@ type PageProps = {
   };
 };
 
-// const CharactersComics = ({ comics }: PageProps) => {
-//   return (
-//     <div>
-//       {Array.isArray(comics) &&
-//         comics.map((comic) => (
-//           <div key={comic.name}>{comic.name}</div>
-//         ))}
-//     </div>
-//   );
-// };
-
 async function HeroPage({ params: { heroId } }: PageProps) {
   const hero = await getHero(heroId);
+  const { id, name, description, thumbnail, comics } = hero;
 
-  if (!hero.id) return notFound();
-  console.log(hero);
+  if (!id) {
+    return notFound();
+  }
 
-  const { name, description, thumbnail, comics } = hero;
+  const renderComics = () => {
+    return (
+      <>
+        {comics.items.map((comic) => (
+          <p key={comic.name}>{comic.name}</p>
+        ))}
+      </>
+    );
+  };
 
   return (
     <div className="heroPage p-10 bg-green-200 border-2 m-2 shadow-lg">
-      <h3>{name}</h3>
-      <Image alt={`${name}`} src={`${thumbnail.path}.jpg`} height="250" width="200"/>
+      <h3 className="text-center font-bold">{name}</h3>
+      <Image
+        className="heroImage"
+        alt={`${name}`}
+        src={`${thumbnail.path}.jpg`}
+        height="250"
+        width="200"
+      />
       <p>{description} </p>
-      {Array.isArray(comics.items) &&
-                    comics.items.map((comic) => {                    
-                        return (
-                          <>
-                            <h3 className="font-bold my-1">Comics Featured in</h3>
-                            <p key={comic.name}>{comic.name}</p>
-                          </>
-                        );
-                      })}
+      <h4 className="font-bold my-1">Comics Featured in</h4>
+      <div className="comicsContainer">
+        {Array.isArray(comics.items) && renderComics()}
+      </div>
     </div>
   );
 }
@@ -53,23 +53,15 @@ async function HeroPage({ params: { heroId } }: PageProps) {
 export default HeroPage;
 
 export async function generateStaticParams() {
-
-  const heroes: Hero[] = await getHeroes(0);
-
-  // this is to avoid being rate limited by the API
+  const heroes: [Hero] = await getHeroes();
 
   const trimmedHeroes = heroes.slice(0, 20);
 
+  const staticHeroParams = trimmedHeroes.map((hero) => ({
+    params: {
+      heroId: hero?.id?.toString(),
+    },
+  }));
 
-    return trimmedHeroes.map((hero) => ({
-    //   <HeroCard params={{
-    //         Hero: undefined
-    //     }} key={hero.id} {...hero} />
-    // ));
-
-    heroId: hero?.id?.toString(),
-}));
-
-  }
-
-  
+  return staticHeroParams;
+}

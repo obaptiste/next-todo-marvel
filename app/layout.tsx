@@ -1,10 +1,13 @@
 import Header from './Header'
 import '../styles/globals.css'
-export default function RootLayout({
+import { getHeroes, getRandomHero } from './utilities/heroService'
+
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode,
 }) {
+  
     return (
       <html>
         <head>

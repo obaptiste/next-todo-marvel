@@ -6,8 +6,7 @@ import { getHeroes } from "../../utilities/heroService";
 import Image from 'next/image';
 
 async function HeroesList() {
-  let randomOffset = Math.floor(Math.random() * 15 + 20) 
-  randomOffset += 20;
+  let randomOffset = Math.floor(Math.random() * 250) 
   const heroes = await getHeroes(randomOffset);
   console.log("heroes",randomOffset);
   return (
