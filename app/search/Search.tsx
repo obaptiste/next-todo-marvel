@@ -1,8 +1,8 @@
 'use client'
 
-import { create } from "domain";
 import Link from "next/link";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter } from 'next/router';
+import { useSearchParams, usePathname } from "next/navigation";
 import React, { FormEvent, useCallback, useState } from "react";
 
 function Search() {
@@ -14,7 +14,8 @@ const router = useRouter();
 
 const createQueryString = useCallback(
   (name: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams as unknown as string);
+    
     params.set(name, value);
     
     return params.toString();
